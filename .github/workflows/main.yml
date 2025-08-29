@@ -8,6 +8,16 @@ on:
 jobs:
   example-job:
     runs-on: ubuntu-latest
+    
     steps:
+    
       - name: Print welcome message.
         run: echo "Welcome to our GitHub Actions First workflow"
+        
+      - name: Checkout Repository.
+        uses: actions/checkout@v5.0.0
+
+      - name: List Repository Files.
+        run: ls -la
+      
+  
