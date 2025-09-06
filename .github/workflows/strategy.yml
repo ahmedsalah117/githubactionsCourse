@@ -23,3 +23,6 @@ jobs:
         uses: actions/setup-node@v3.6.0
         with:
           node-version: ${{matrix.node_version}}
+
+    # we can use this type of job to test our code on different OS and node versions. We want to know which one will fail , and which one will work.
+     
