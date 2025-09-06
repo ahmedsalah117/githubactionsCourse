@@ -1,0 +1,24 @@
+on:
+  workflow_dispatch:
+
+
+jobs:
+  job-1:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Step1
+        run: |
+          npm install
+          npm run build
+          working-directory: ./temp
+          shell: bash
+          # pwsh, cmd, powershell, python
+
+     # In the last line we were choosing the shell that we want to run
+
+      - name: step2
+        run: print %ENV
+        shell: perl {0}
+        
+        # here we are choosing a shell that doesnot exist by default in ubuntu, however this is a custom one that we supposedly installed in our repo
