@@ -1,0 +1,46 @@
+on:
+  workflow_dispatch:
+
+
+jobs:
+
+   hybrid-job:
+   runs-on: ubuntu-latest
+   steps:
+     - name: Run inside an alpine container
+       uses: docker://alpine:3.14 # you can use a docker image to run a step inside a docker container, but the docker image has to be publically accessible without authentication.
+       with:
+         entrypoint: /bin/sh # you have to add an entry point for alpine, because it doesn't have a default entry point
+       args: |
+          -c "echo 'This step runs inside an alpine container'"
+
+     - name: Run inside the VM.
+       run: echo "This runs in the ubuntu-latest VM"
+
+
+# if you want to use a private docker image, you have to use the container option at the job level, but then all steps in the job run inside the container.
+
+   dockerized-job:
+    runs-on: ubuntu-latest
+    container: node:20 
+    steps:
+      - name: Check node version
+        run: node --v
+      - name: Check npm version
+        run: npm --version
+
+
+
+   dockerized-job-with-credentials:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/my-org/my-private-image:latest
+      credentials:
+        username: ${{ secrets.REGISTRY_USERNAME }}
+        password: ${{ secrets.REGISTRY_PASSWORD }}
+    steps:
+      - name: Check something inside the private container
+        run: echo "This runs inside a private container"
+        
+      - name: Check node version
+        run: node --v

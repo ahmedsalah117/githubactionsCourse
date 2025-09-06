@@ -1,0 +1,25 @@
+on:
+  workflow_dispatch:
+
+jobs:
+
+  job-1:
+  # fail-fast is responsible for the behavior of quiting the workflow if one of the jobs fails. The default value is true, which means the workflow will stop if one job fails. Setting it to false will allow all jobs to run even if one fails.
+    fail-fast: false
+    # max-parallel controls the number of jobs that can run in parallel. The default value is 1, which means jobs will run sequentially. Setting it to a higher value will allow more jobs to run in parallel.
+    max-parallel: 3
+    # matrix allows you to create multiple job runs with different configurations. Each combination of the matrix values will create a separate job run.
+    strategy:
+      matrix:
+      # the os and node_version keys define the dimensions of the matrix. Each combination of these values will create a separate job run. You can define your own keys and values as needed.
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        node_version: [14.x,15.x, 16.x]
+    # this means the job will run 3 times on each OS , each time with a different node version, resulting in a total of 9 job runs.
+    runs-on: ${{matrix.os}}
+    
+    steps:
+    # in this step we are trying to setup node using the actions/setup-node action. The node version is taken from the matrix configuration.
+      - name: Setup Node.js ${{matrix.node_version}} on ${{matrix.os}}
+        uses: actions/setup-node@v3.6.0
+        with:
+          node-version: ${{matrix.node_version}}
