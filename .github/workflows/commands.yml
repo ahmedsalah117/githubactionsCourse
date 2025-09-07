@@ -1,0 +1,20 @@
+on:
+  workflow_dispatch:
+
+jobs:
+# we use commands to tell the workflow to do something like showing a warning or error message to the developer
+  commands:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: "Deprecated message warning"
+        run: |
+         deprecated=true
+         if [[ deprecated ]]; then
+         echo "::warning::Deprecated function found"
+         fi 
+
+    # you have to use the ::warning:: syntax so that github understands that you want to run a command.
+    # You should also end the run command with fi
+         
