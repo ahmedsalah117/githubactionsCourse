@@ -9,11 +9,11 @@ jobs:
     steps:
       - name: Print a message
         run: echo "The job is running..."
-        if: ${{github.event_name == 'push'}} #this means the step will only run if the condition is true. a push event happens.
+        if: ${{ github.event_name == 'push' }} #this means the step will only run if the condition is true. a push event happens.
 
       - name: 2nd Step
         run: echo "2nd step is running..."
-        if: ${{github.event_name != 'push' || github.ref == "refs/head/main"}}
+        if: ${{ github.event_name != 'push' || github.ref == "refs/head/main" }}
 
       - name: 3rd Step
         run: echo "3rd step is running"
