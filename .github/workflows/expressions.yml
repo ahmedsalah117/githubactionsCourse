@@ -13,7 +13,7 @@ jobs:
 
       - name: 2nd Step
         run: echo "2nd step is running..."
-        if: ${{ github.event_name != 'push' || github.ref == "refs/head/main" }}
+        if: ${{ github.event_name != 'push' || github.ref == 'refs/head/main' }}
 
       - name: 3rd Step
         run: echo "3rd step is running"
