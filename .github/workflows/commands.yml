@@ -17,4 +17,12 @@ jobs:
 
     # you have to use the ::warning:: syntax so that github understands that you want to run a command.
     # You should also end the run command with fi
-         
+
+      - name: "Set API KEY as an env var with github actions commands"
+        run: echo "API_KEY=1234" >> $GITHUB_ENV
+
+      - name: "Use the API KEY"
+        run: echo "Using the api_key $API_KEY"
+        
+    # please note that each step is isolated from the other ones, so if you create a var in a step , the other steps can't use it unless you add it to GITHUB_ENV
+    
