@@ -7,6 +7,14 @@ on:
     paths:
       - "src/**"
 
+  pull_request:
+    branches:
+      - main
+      - "release/**"
+      
+    paths:
+      - "src/**"
+
 jobs:
   
   build:

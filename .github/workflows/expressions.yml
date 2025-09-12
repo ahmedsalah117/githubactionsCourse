@@ -1,0 +1,41 @@
+on:
+  workflow_dispatch:
+
+
+
+jobs:
+  expressions:
+    runs-on: ubunut-latest
+    steps:
+      - name: Print a message
+        run: echo "The job is running..."
+        if: ${{ github.event_name == 'push' }} #this means the step will only run if the condition is true. a push event happens.
+
+      - name: 2nd Step
+        run: echo "2nd step is running..."
+        if: ${{ github.event_name != 'push' || github.ref == 'refs/head/main' }}
+
+      - name: 3rd Step
+        run: echo "3rd step is running"
+        if: ${{ contains(github.event.head_commit.message, 'WIP') }} #this means run the step if the commit message contains the string WIP
+
+      - name: Starts With Function
+        run: echo "Starts with function"
+        if: ${{ startsWith(github.event.ref, 'refs/tags/v') }} #this will only run if the commit is referring to a tag.
+
+      - name: Success function
+        run: echo "The success function lets us know that all of the previous steps were successful"
+        if: success()
+
+      - name: Failure function
+        run: echo "If at least one of the previous steps has failed, the failure function will be fired so that we can use it to do something like sending a slack message"
+        if: failure()
+        
+      - name: Always Function
+        run: echo " The Always function means run this step if all of the previous steps has succeeded or even failed"
+        if: always()
+
+      - name: Cancelled() function
+        run: echo "The Cancelled function will fire if any of the previous steps has been cancelled which also means the entire workflow will be cancelled. we can also use it to maybe send a slack message"
+        if: cancelled()
+        

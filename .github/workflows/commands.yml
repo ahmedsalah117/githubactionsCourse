@@ -1,0 +1,43 @@
+on:
+  workflow_dispatch:
+
+jobs:
+# we use commands to tell the workflow to do something like showing a warning or error message to the developer
+  commands:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: "Deprecated message warning"
+        run: |
+         deprecated=true
+         if [[ deprecated ]]; then
+         echo "::warning::Deprecated function found"
+         fi 
+
+    # you have to use the ::warning:: syntax so that github understands that you want to run a command.
+    # You should also end the run command with fi
+
+      - name: "Set API KEY as an env var with github actions commands"
+        run: echo "API_KEY=1234" >> $GITHUB_ENV
+
+        # we can mask the api key as follows...
+
+      - name: Masking the API Key before using it.
+        run: echo "::add-mask::$API_KEY"
+
+      - name: "Use the API KEY"
+        run: echo "Using the api_key $API_KEY"
+        
+    # please note that each step is isolated from the other ones, so if you create a var in a step , the other steps can't use it unless you add it to GITHUB_ENV
+    
+      - name: Check if a file exists
+        run: |
+          if [ -f "config.yml" ]; then
+          echo "::debug::Config.yml exists"
+          else
+          echo "::error::Config.yml is missing"
+          fi
+
+    # this will show an annotation error to the developer , but still the workflow wouldn't fail just because we are showing an error so the ::error command does not break the workflow
+    
