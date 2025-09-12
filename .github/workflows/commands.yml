@@ -21,6 +21,11 @@ jobs:
       - name: "Set API KEY as an env var with github actions commands"
         run: echo "API_KEY=1234" >> $GITHUB_ENV
 
+        # we can mask the api key as follows...
+
+      - name: Masking the API Key before using it.
+        run: echo "::add-mask::$API_KEY"
+
       - name: "Use the API KEY"
         run: echo "Using the api_key $API_KEY"
         
